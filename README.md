@@ -24,10 +24,10 @@ Docker 容器监控
     --publish=18080:18080 \
     --env Interval=60 \
     --detach=true \
-    --name=micadvisor \
+    --name=openc3-cadvisor \
     --net=host \
     --restart=always \
-    micadvisor:latest
+    openc3-cadvisor:latest
 ```
 
 ## 在grafana中导入下面的看版
