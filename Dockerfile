@@ -1,7 +1,7 @@
 FROM progrium/busybox
 
 
-MAINTAINER Meng Zhuo <mengzhuo@xiaomi.com>
+MAINTAINER LiJinFeng <lijinfeng2011@gmail.com>
 
 ENV Interval 60
 
