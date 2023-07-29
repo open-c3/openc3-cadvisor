@@ -26,11 +26,28 @@ func getCpuNum(dockerdata string) {
 	}
 }
 
-func getTag(DockerData string) string {
+func getTag(containerId string, DockerData string) string {
         //FIXMI:some other message for container
+
         TagsName := getBetween(DockerData, `"Name":"`, `",`)
-        tagsName := "name=" + TagsName[1:len(TagsName)-0]
-        return tagsName
+        tagsName := TagsName[1:len(TagsName)-0]
+
+        Name := strings.Split(tagsName, "-")
+
+        tagsCluster := "default"
+        if len(Name) >= 2 {
+            tagsCluster = Name[0]
+        }
+ 
+        tagsTask := "default"
+        if len(Name) >= 3 {
+            tagsTask = Name[1]
+        }
+
+        tagsId := containerId[:12]
+
+        tags := "cluster=" + tagsCluster + "," + "task=" + tagsTask + "," + "name=" + tagsName + "," + "id=" + tagsId
+        return tags
 }
 
 func getMemLimit(str string) string {
