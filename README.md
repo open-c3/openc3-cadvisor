@@ -18,7 +18,7 @@ Docker 容器监控
     --volume=/:/rootfs:ro \
     --volume=/var/run:/var/run:rw \
     --volume=/sys:/sys:ro \
-    --volume=/home/work/log/cadvisor/:/home/work/uploadCadviosrData/log \
+    --volume=/opt/mydan/var/logs/openc3-cadvisor/:/home/work/uploadCadviosrData/log \
     --volume=/var/lib/docker/:/var/lib/docker:ro \
     --volume=/home/docker/containers:/home/docker/containers:ro \
     --publish=18080:18080 \
