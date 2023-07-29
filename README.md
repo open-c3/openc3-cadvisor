@@ -21,7 +21,7 @@ Docker 容器监控
     --volume=/opt/mydan/var/logs/openc3-cadvisor/:/home/work/uploadCadviosrData/log \
     --volume=/var/lib/docker/:/var/lib/docker:ro \
     --volume=/home/docker/containers:/home/docker/containers:ro \
-    --publish=18080:18080 \
+    --publish=65100:65100 \
     --env Interval=60 \
     --detach=true \
     --name=openc3-cadvisor \

@@ -2,7 +2,7 @@ package main
 
 import "os"
 
-var CadvisorPort = "18080"
+var CadvisorPort = "65100"
 
 func main() {
 
