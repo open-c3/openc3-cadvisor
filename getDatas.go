@@ -13,6 +13,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"syscall"
 )
 
 func getCpuNum(dockerdata string) {
@@ -51,7 +52,22 @@ func getTag(containerId string, DockerData string) string {
 }
 
 func getMemLimit(str string) string {
-	return getBetween(str, `"memory":{"limit":`, `,"`)
+	memlimit := getBetween(str, `"memory":{"limit":`, `,"`)
+
+        var info syscall.Sysinfo_t
+        if err := syscall.Sysinfo(&info); err != nil {
+                LogErr(err, "Error while getting sysinfo:")
+                return memlimit
+        }
+
+	totalMemory := info.Totalram * uint64(info.Unit)
+	memlimitint, _ := strconv.ParseUint(memlimit, 10, 64)
+
+
+	if memlimitint > totalMemory && totalMemory > 0 {
+		memlimit = strconv.FormatUint(totalMemory, 10)
+	}
+        return memlimit
 }
 
 func getBetween(str, start, end string) string {

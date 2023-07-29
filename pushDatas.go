@@ -118,19 +118,19 @@ func pushNet(networkuage1, networkuage2, timestamp, tags, containerId, endpoint 
 
 func pushMem(memLimit, memoryusage, timestamp, tags, containerId, endpoint string) error {
 	LogRun("pushMem")
-	memUsageNum := getBetween(memoryusage, `"usage":`, `,"working_set"`)
+	memUsageNum := getBetween(memoryusage, `"usage":`, `,"max_usage"`)
 	rssUsageNum := getBetween(memoryusage, `"rss":`,    `,"swap"`      )
 
 	rrsnu, _ := strconv.ParseInt(rssUsageNum, 10, 64)
 	fenzi, _ := strconv.ParseInt(memUsageNum, 10, 64)
 	fenmu, err := strconv.ParseInt(memLimit, 10, 64)
 	if err == nil {
-		memUsage := float64(fenzi) / float64(fenmu)
+		memUsage := 100 * float64(fenzi) / float64(fenmu)
 		if err := pushIt(fmt.Sprint(memUsage), timestamp, "mem.memused.percent", tags, containerId, "GAUGE", endpoint); err != nil {
 			LogErr(err, "pushIt err in pushMem")
 		}
 
-		rrsUsage := float64(rrsnu) / float64(fenmu)
+		rrsUsage := 100 * float64(rrsnu) / float64(fenmu)
 		if err := pushIt(fmt.Sprint(rrsUsage), timestamp, "mem.rrsused.percent", tags, containerId, "GAUGE", endpoint); err != nil {
 			LogErr(err, "pushIt err in pushMem")
 		}
