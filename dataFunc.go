@@ -27,6 +27,8 @@ func pushIt(value, timestamp, metric, tags, containerId, counterType, endpoint s
 
 	}
 
+	metric = "openc3_cadvisor." + metric
+
 	postThing := `[{"metric": "` + metric + `", "endpoint": "` + endpoint + `", "timestamp": ` + timestamp + `,"step": ` + "60" + `,"value": ` + value + `,"counterType": "` + counterType + `","tags": "` + tags + `"}]`
 	LogRun(postThing)
 	//push data to falcon-agent
