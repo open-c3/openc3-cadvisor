@@ -4,9 +4,28 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+	"strconv"
+	"regexp"
 )
 
+func isFloatingPointNumber(s string) bool {
+	match, _ := regexp.MatchString(`\.`, s)
+	return match
+}
+
 func pushIt(value, timestamp, metric, tags, containerId, counterType, endpoint string) error {
+	isFloat := isFloatingPointNumber(value)
+
+	if isFloat {
+		num, err0 := strconv.ParseFloat(value, 64)
+		if err0 != nil {
+			LogErr(err0, "value not num")
+			return err0
+		}
+
+		value = strconv.FormatFloat(num, 'f', 4, 64)
+
+	}
 
 	postThing := `[{"metric": "` + metric + `", "endpoint": "` + endpoint + `", "timestamp": ` + timestamp + `,"step": ` + "60" + `,"value": ` + value + `,"counterType": "` + counterType + `","tags": "` + tags + `"}]`
 	LogRun(postThing)
