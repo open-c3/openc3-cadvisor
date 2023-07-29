@@ -14,6 +14,7 @@ import (
 	"strconv"
 	"strings"
 	"syscall"
+	"time"
 )
 
 func getCpuNum(dockerdata string) {
@@ -102,12 +103,25 @@ func getCadvisorData() (string, error) {
 func getUsageData(cadvisorData string) (ausge, busge string) {
 	ausge = strings.Split(cadvisorData, `{"timestamp":`)[1]
 	if len(strings.Split(cadvisorData, `{"timestamp":`)) < 11 {
-		countNum = 1
+		//countNum = 1
 		busge = strings.Split(cadvisorData, `{"timestamp":`)[2]
 	} else {
 		busge = strings.Split(cadvisorData, `{"timestamp":`)[11]
-		countNum = 10
+		//countNum = 10
 	}
+
+
+	time1, err1 := time.Parse(time.RFC3339Nano, getBetween(ausge, `"`, `"`))
+	if err1 != nil {
+		LogErr(err1,"time1 Parse err")
+	}
+
+	time2, err2 := time.Parse(time.RFC3339Nano, getBetween(busge, `"`, `"`))
+	if err2 != nil {
+		LogErr(err2,"time2 Parse err")
+	}
+
+	countNum = float64(time2.Sub(time1).Seconds())
 
 	return ausge, busge
 }

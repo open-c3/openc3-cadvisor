@@ -9,7 +9,7 @@ import (
 
 var (
 	cpuNum   int64
-	countNum int
+	countNum float64
 )
 
 func pushData() {
@@ -72,7 +72,7 @@ func pushData() {
 	}
 }
 
-func pushCount(metric, usageA, usageB, start, end string, countNum int, timestamp, tags, containerId, endpoint string, weight float64) error {
+func pushCount(metric, usageA, usageB, start, end string, countNum float64, timestamp, tags, containerId, endpoint string, weight float64) error {
 
 	temp1, _ := strconv.ParseInt(getBetween(usageA, start, end), 10, 64)
 	temp2, _ := strconv.ParseInt(getBetween(usageB, start, end), 10, 64)
