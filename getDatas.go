@@ -50,6 +50,23 @@ func getTag(containerId string, DockerData string, cadvData string ) string {
 		TagsNameSpace = "default"
 	}
 
+
+	k8sNameSpace := getBetween(DockerData, `"io.kubernetes.pod.namespace":"`, `",`)
+
+	if k8sNameSpace != "" {
+		TagsNameSpace = k8sNameSpace
+
+		k8sTask := getBetween(DockerData, `"io.kubernetes.container.name":"`, `",`)
+                if k8sTask != "" {
+			tagsTask = k8sTask
+		}
+	
+		k8sName := getBetween(DockerData, `"io.kubernetes.pod.name":"`, `",`)
+                if k8sName != "" {
+			tagsName = k8sName
+		}
+	}
+
 	tags := "cluster=" + tagsCluster + "," + "namespace=" + TagsNameSpace + "," + "task=" + tagsTask + "," + "name=" + tagsName + "," + "id=" + tagsId
 	return tags
 }

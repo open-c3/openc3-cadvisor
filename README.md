@@ -42,11 +42,21 @@
 
 标签来源:
 
-id:        docker容器的id
-name:      docker容器的name
-namespace: 容器的namespace，如果找不到则默认为“default”，
-           一般情况下都会有，如果不指定，docker启动的时候会给一个namspace，如 "docker"
+  通用标签:
+    cluster:   从启动命令ClusterName指定
+    id:        docker容器的id
 
-cluster:   从启动命令ClusterName指定
-task:      把name用“-”切割，第一个字符串就是task
+
+  不同平台标签:
+    无平台:
+      namespace: 容器的namespace，如果找不到则默认为“default”，
+                 一般情况下都会有，如果不指定，docker启动的时候会给一个namspace，如 "docker"
+      name:      docker容器的name
+      task:      把name用“-”切割，第一个字符串就是task
+
+
+    原生k8s:
+      namespace: io.kubernetes.pod.namespace 标签
+      name:      io.kubernetes.pod.name 标签
+      task:      io.kubernetes.container.name 标签
 ```
