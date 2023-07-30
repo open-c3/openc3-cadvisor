@@ -28,28 +28,33 @@ func getCpuNum(dockerdata string) {
 	}
 }
 
-func getTag(containerId string, DockerData string) string {
-        //FIXMI:some other message for container
+func getTag(containerId string, DockerData string, cadvData string ) string {
+	//FIXMI:some other message for container
 
-        TagsName := getBetween(DockerData, `"Name":"`, `",`)
-        tagsName := TagsName[1:len(TagsName)-0]
+	TagsName := getBetween(DockerData, `"Name":"`, `",`)
+	tagsName := TagsName[1:len(TagsName)-0]
 
-        Name := strings.Split(tagsName, "-")
+	Name := strings.Split(tagsName, "-")
 
-        tagsCluster := "default"
-        if len(Name) >= 2 {
-            tagsCluster = Name[0]
-        }
- 
-        tagsTask := "default"
-        if len(Name) >= 3 {
-            tagsTask = Name[1]
-        }
+	tagsCluster := "default"
+	if len(Name) >= 2 {
+		tagsCluster = Name[0]
+	}
 
-        tagsId := containerId[:12]
+	tagsTask := "default"
+	if len(Name) >= 3 {
+		tagsTask = Name[1]
+	}
 
-        tags := "cluster=" + tagsCluster + "," + "task=" + tagsTask + "," + "name=" + tagsName + "," + "id=" + tagsId
-        return tags
+	tagsId := containerId[:12]
+
+	TagsNameSpace := getBetween(cadvData, `"namespace":"`, `",`)
+	if TagsNameSpace == "" {
+		TagsNameSpace = "default"
+	}
+
+	tags := "cluster=" + tagsCluster + "," + "namespace=" + TagsNameSpace + "," + "task=" + tagsTask + "," + "name=" + tagsName + "," + "id=" + tagsId
+	return tags
 }
 
 func getMemLimit(str string) string {
