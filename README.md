@@ -20,6 +20,7 @@
     --volume=/home/docker/containers:/home/docker/containers:ro \
     --publish=65100:65100 \
     --env Interval=60 \
+    --env ClusterName=defaultcluster \
     --detach=true \
     --name=openc3-cadvisor \
     --net=host \
@@ -46,7 +47,6 @@ name:      docker容器的name
 namespace: 容器的namespace，如果找不到则默认为“default”，
            一般情况下都会有，如果不指定，docker启动的时候会给一个namspace，如 "docker"
 
-cluster:   把name用“-”切割，如果长度大于等于2，那第一个字符串就是cluster。
-task:      把name用“-”切割，如果长度大于等于3，那第二个字符串就是task。
-
+cluster:   从启动命令ClusterName指定
+task:      把name用“-”切割，第一个字符串就是task
 ```

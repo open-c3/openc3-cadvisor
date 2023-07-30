@@ -36,15 +36,12 @@ func getTag(containerId string, DockerData string, cadvData string ) string {
 
 	Name := strings.Split(tagsName, "-")
 
-	tagsCluster := "default"
-	if len(Name) >= 2 {
-		tagsCluster = Name[0]
+	tagsCluster := os.Getenv("ClusterName")
+	if tagsCluster == "" {
+		tagsCluster = "default"
 	}
 
-	tagsTask := "default"
-	if len(Name) >= 3 {
-		tagsTask = Name[1]
-	}
+	tagsTask := Name[0]
 
 	tagsId := containerId[:12]
 
