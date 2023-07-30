@@ -24,7 +24,7 @@
     --name=openc3-cadvisor \
     --net=host \
     --restart=always \
-    openc3-cadvisor:latest
+    openc3/openc3-cadvisor:latest
 ```
 
 ### 在grafana中导入下面的看版

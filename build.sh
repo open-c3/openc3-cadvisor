@@ -6,6 +6,6 @@ go build run.go
 go build uploadCadvisorData.go pushDatas.go mylog.go getDatas.go dataFunc.go
 [ $? -ne 0 ] && exit 1 
 
-docker build -t openc3-cadvisor ./
+docker build -t openc3/openc3-cadvisor ./
 
 
