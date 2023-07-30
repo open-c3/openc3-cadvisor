@@ -25,7 +25,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 48,
-  "iteration": 1690628162992,
+  "iteration": 1690687813425,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -80,7 +80,7 @@
             "uid": "dBFiSdOnk"
           },
           "editorMode": "code",
-          "expr": "openc3_cadvisor_cpu_busy{cluster=~\"$cluster\",task=~\"$task\"}",
+          "expr": "openc3_cadvisor_cpu_busy{cluster=~\"$cluster\",namespace=~\"$namespace\",task=~\"$task\"}/100",
           "interval": "",
           "legendFormat": "{{instance}}:{{name}}:{{id}}",
           "range": true,
@@ -89,7 +89,7 @@
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "cpu_busy",
+      "title": "cores used",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -104,9 +104,8 @@
       "yaxes": [
         {
           "$$hashKey": "object:119",
-          "format": "percent",
+          "format": "none",
           "logBase": 1,
-          "max": "100",
           "min": "0",
           "show": true
         },
@@ -172,7 +171,7 @@
             "uid": "dBFiSdOnk"
           },
           "editorMode": "code",
-          "expr": "openc3_cadvisor_cpu_system{cluster=~\"$cluster\",task=~\"$task\"}",
+          "expr": "openc3_cadvisor_cpu_system{cluster=~\"$cluster\",namespace=~\"$namespace\",task=~\"$task\"} / 100",
           "interval": "",
           "legendFormat": "{{instance}}:{{name}}:{{id}}",
           "range": true,
@@ -181,7 +180,7 @@
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "cpu_system",
+      "title": "cores kernel",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -196,9 +195,8 @@
       "yaxes": [
         {
           "$$hashKey": "object:200",
-          "format": "percent",
+          "format": "none",
           "logBase": 1,
-          "max": "100",
           "min": "0",
           "show": true
         },
@@ -264,7 +262,7 @@
             "uid": "dBFiSdOnk"
           },
           "editorMode": "code",
-          "expr": "openc3_cadvisor_cpu_user{cluster=~\"$cluster\",task=~\"$task\"}",
+          "expr": "openc3_cadvisor_cpu_user{cluster=~\"$cluster\",namespace=~\"$namespace\",task=~\"$task\"} / 100",
           "interval": "",
           "legendFormat": "{{instance}}:{{name}}:{{id}}",
           "range": true,
@@ -273,7 +271,7 @@
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "cpu_user",
+      "title": "cores user",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -288,9 +286,8 @@
       "yaxes": [
         {
           "$$hashKey": "object:281",
-          "format": "percent",
+          "format": "none",
           "logBase": 1,
-          "max": "100",
           "min": "0",
           "show": true
         },
@@ -356,7 +353,7 @@
             "uid": "dBFiSdOnk"
           },
           "editorMode": "code",
-          "expr": "openc3_cadvisor_mem_memused{cluster=~\"$cluster\",task=~\"$task\"}",
+          "expr": "openc3_cadvisor_mem_memused{cluster=~\"$cluster\",namespace=~\"$namespace\",task=~\"$task\"}",
           "interval": "",
           "legendFormat": "{{instance}}:{{name}}:{{id}}",
           "range": true,
@@ -365,7 +362,7 @@
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "mem_memused",
+      "title": "mem used",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -446,7 +443,7 @@
             "uid": "dBFiSdOnk"
           },
           "editorMode": "code",
-          "expr": "openc3_cadvisor_mem_memused_percent{cluster=~\"$cluster\",task=~\"$task\"}",
+          "expr": "openc3_cadvisor_mem_memused_percent{cluster=~\"$cluster\",namespace=~\"$namespace\",task=~\"$task\"}",
           "interval": "",
           "legendFormat": "{{instance}}:{{name}}:{{id}}",
           "range": true,
@@ -455,7 +452,7 @@
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "mem_memused_percent",
+      "title": "mem used %",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -537,7 +534,7 @@
             "uid": "dBFiSdOnk"
           },
           "editorMode": "code",
-          "expr": "openc3_cadvisor_mem_rrsused_percent{cluster=~\"$cluster\",task=~\"$task\"}",
+          "expr": "openc3_cadvisor_mem_rrsused_percent{cluster=~\"$cluster\",namespace=~\"$namespace\",task=~\"$task\"}",
           "interval": "",
           "legendFormat": "{{instance}}:{{name}}:{{id}}",
           "range": true,
@@ -546,7 +543,7 @@
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "mem_rrsused_percent",
+      "title": "rrs used %",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -604,12 +601,42 @@
         "definition": "label_values(openc3_cadvisor_net_if_out_packets, cluster)",
         "hide": 0,
         "includeAll": false,
-        "label": "集群",
+        "label": "cluster",
         "multi": true,
         "name": "cluster",
         "options": [],
         "query": {
           "query": "label_values(openc3_cadvisor_net_if_out_packets, cluster)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "docker",
+          "value": "docker"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dBFiSdOnk"
+        },
+        "definition": "label_values(openc3_cadvisor_net_if_out_packets{cluster=~\"$cluster\"}, namespace)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "namespace",
+        "multi": true,
+        "name": "namespace",
+        "options": [],
+        "query": {
+          "query": "label_values(openc3_cadvisor_net_if_out_packets{cluster=~\"$cluster\"}, namespace)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -649,7 +676,7 @@
           "type": "prometheus",
           "uid": "dBFiSdOnk"
         },
-        "definition": "label_values(openc3_cadvisor_net_if_out_packets{cluster=~\"$cluster\"}, task)",
+        "definition": "label_values(openc3_cadvisor_net_if_out_packets{cluster=~\"$cluster\",namespace=~\"$namespace\"}, task)",
         "hide": 0,
         "includeAll": false,
         "label": "task",
@@ -657,7 +684,7 @@
         "name": "task",
         "options": [],
         "query": {
-          "query": "label_values(openc3_cadvisor_net_if_out_packets{cluster=~\"$cluster\"}, task)",
+          "query": "label_values(openc3_cadvisor_net_if_out_packets{cluster=~\"$cluster\",namespace=~\"$namespace\"}, task)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -679,6 +706,6 @@
   "timezone": "",
   "title": "openc3-cadvisor & docker monitor",
   "uid": "C-VC5-3Vz",
-  "version": 2,
+  "version": 12,
   "weekStart": ""
 }

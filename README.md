@@ -33,3 +33,4 @@ Docker 容器监控
 ## 在grafana中导入下面的看版
 
 [点击下载grafana看版](/grafana.dashbord.json)
+![grafana看版](/grafana.dashbord.png)
